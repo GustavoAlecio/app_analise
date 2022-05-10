@@ -20,12 +20,19 @@ class GraficoPageState extends State<GraficoPage> {
     getSeriesdata() {
       List<charts.Series<CurvaPV, double>> series = [
         charts.Series(
-            id: "Curva PV",
-            data: args.resultado,
+            id: "Linha Superior",
+            data: args.resultadoSuperior,
             domainFn: (CurvaPV series, _) => series.lineX,
             measureFn: (CurvaPV series, _) => series.result,
             colorFn: (CurvaPV series, _) =>
-                charts.MaterialPalette.blue.shadeDefault)
+                charts.MaterialPalette.blue.shadeDefault),
+        charts.Series(
+            id: "Linha Inferior",
+            data: args.resultadoInferior,
+            domainFn: (CurvaPV series, _) => series.lineX,
+            measureFn: (CurvaPV series, _) => series.result,
+            colorFn: (CurvaPV series, _) =>
+                charts.MaterialPalette.red.shadeDefault)
       ];
       return series;
     }
@@ -37,8 +44,9 @@ class GraficoPageState extends State<GraficoPage> {
       body: SingleChildScrollView(
           child: SizedBox(
         height: 550,
+        width: 400,
         child: Card(
-          child: Expanded(child: charts.LineChart(getSeriesdata())),
+          child: charts.LineChart(getSeriesdata()),
         ),
       )),
     );

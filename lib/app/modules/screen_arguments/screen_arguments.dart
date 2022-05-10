@@ -1,7 +1,8 @@
 class ScreenArguments {
-  final List<CurvaPV> resultado;
+  final List<CurvaPV> resultadoSuperior;
+  final List<CurvaPV> resultadoInferior;
 
-  ScreenArguments(this.resultado);
+  ScreenArguments(this.resultadoSuperior, this.resultadoInferior);
 }
 
 class CurvaPV {

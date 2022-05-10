@@ -47,7 +47,13 @@ abstract class HomeStoreBase with Store {
   double potenciaFinal = 0.0;
 
   @observable
+  double potenciaInstantanea = 0.0;
+
+  @observable
   List potenciaAtivaList = [];
+
+  @observable
+  List potenciaReativaList = [];
 
   @action
   setPotenciaFinal(double value) => potenciaFinal = value;
@@ -56,7 +62,13 @@ abstract class HomeStoreBase with Store {
   int numeroIteracoes = 0;
 
   @observable
+  double variavel = 0.01;
+
+  @observable
   List<String> iteracoes = [];
+
+  @observable
+  List<String> potenciaIteracao = [];
 
   @action
   setNumeroIteracoes(int value) => numeroIteracoes = value;
@@ -74,7 +86,10 @@ abstract class HomeStoreBase with Store {
   List<double> resultadoY2 = [];
 
   @observable
-  List<CurvaPV> data = [];
+  List<CurvaPV> data1 = [];
+
+  @observable
+  List<CurvaPV> data2 = [];
 
   @action
   setResultadoY1(double value) {
@@ -99,14 +114,15 @@ abstract class HomeStoreBase with Store {
         potenciaFinal != 0.0) {
       List resultado = [];
       iteracoes.clear();
-      double potenciaInstantanea = 0;
+      potenciaInstantanea = 0;
+
       for (int i = 0; i < numeroIteracoes; i++) {
-        double variavel = (potenciaFinal - potenciaInicial) / numeroIteracoes;
         potenciaInstantanea == 0
             ? potenciaInstantanea = potenciaInicial
             : potenciaInstantanea += variavel;
         resultado.add((potenciaInstantanea * fatorPotencia).toPrecision(4));
         iteracoes.add((i + 1).toString());
+        potenciaIteracao.add((potenciaInstantanea.toPrecision(2)).toString());
       }
       return resultado;
     }
@@ -118,39 +134,48 @@ abstract class HomeStoreBase with Store {
         potenciaInicial >= 0.0 &&
         potenciaFinal != 0.0) {
       List resultado = [];
-      double potenciaInstantanea = 0.0;
+      potenciaInstantanea = 0.0;
       for (int i = 1; i <= numeroIteracoes; i++) {
-        double variavel = (potenciaFinal - potenciaInicial) / numeroIteracoes;
         potenciaInstantanea == 0
             ? potenciaInstantanea = potenciaInicial
             : potenciaInstantanea += variavel;
-        resultado.add(potenciaInstantanea * sin(acos(fatorPotencia)));
+        resultado.add(
+            (potenciaInstantanea * sin(acos(fatorPotencia))).toPrecision(4));
       }
       return resultado;
     }
   }
 
   @action
+  setB(int i) {
+    double x1 = ((resistencia * potenciaAtivaList[i]) +
+        (reatancia * potenciaReativaList[i]));
+    baskharaB = (2 * x1) - pow(tensaoEntrada, 2);
+    baskharaB = baskharaB.toPrecision(4);
+  }
+
+  @action
+  setC(int i) {
+    num x1 = ((resistencia * potenciaReativaList[i]) -
+        (reatancia * potenciaAtivaList[i]));
+    double x2 = ((resistencia * potenciaAtivaList[i]) +
+        (reatancia * potenciaReativaList[i]));
+    baskharaC = (x1 * x1) + (x2 * x2);
+    baskharaC = baskharaC.toPrecision(4);
+  }
+
+  @action
   setCalculos() async {
     resultadoY1.clear();
     resultadoY2.clear();
+    numeroIteracoes = (potenciaFinal - potenciaInicial) ~/ variavel;
     potenciaAtivaList.clear();
+    potenciaReativaList.clear();
     potenciaAtivaList = await setPotenciaAtiva();
-    List potenciaReativaList = await setPotenciaReativa();
+    potenciaReativaList = await setPotenciaReativa();
     for (var i = 0; i < numeroIteracoes; i++) {
-      baskharaB = ((2 *
-                  (resistencia * potenciaAtivaList[i] +
-                      reatancia * potenciaReativaList[i])) -
-              pow(tensaoEntrada, 2))
-          .toPrecision(4);
-
-      double rQ2MINUSxP2 = (resistencia * potenciaReativaList[i]) -
-          (reatancia * potenciaAtivaList[i]);
-      double rP2PLUSxQ2 = (resistencia * potenciaAtivaList[i] +
-          reatancia * potenciaReativaList[i]);
-      baskharaC = ((rQ2MINUSxP2 * rQ2MINUSxP2) + (rP2PLUSxQ2 * rP2PLUSxQ2))
-          .toPrecision(4);
-
+      setB(i);
+      setC(i);
       double delta = ((baskharaB * baskharaB) - (4 * baskharaC)).toPrecision(4);
       double y1 = ((-baskharaB + sqrt(delta)) / 2).toPrecision(4);
       double y2 = ((-baskharaB - sqrt(delta)) / 2).toPrecision(4);
@@ -169,16 +194,18 @@ abstract class HomeStoreBase with Store {
 
   @action
   setCurvaPV() {
-    data.clear();
-    double potenciaInstantanea = 0.0;
+    data1.clear();
+    data2.clear();
+    potenciaInstantanea = 0.0;
+
     for (var i = 0; i < numeroIteracoes; i++) {
-      double variavel = (potenciaFinal - potenciaInicial) / numeroIteracoes;
       if (potenciaInstantanea == 0) {
         potenciaInstantanea = potenciaInicial;
       } else {
         potenciaInstantanea += variavel;
       }
-      data.add(CurvaPV(potenciaInstantanea, resultadoY1[i]));
+      data1.add(CurvaPV(potenciaInstantanea, resultadoY1[i]));
+      data2.add(CurvaPV(potenciaInstantanea, resultadoY2[i]));
     }
   }
 }

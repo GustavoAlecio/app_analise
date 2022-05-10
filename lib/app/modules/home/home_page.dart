@@ -186,24 +186,24 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   ),
                 ],
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                child: SizedBox(
-                  width: 200,
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        store.setNumeroIteracoes(int.parse(value));
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      hintText: "Número de Iterações",
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+              //   child: SizedBox(
+              //     width: 200,
+              //     child: TextFormField(
+              //       keyboardType: TextInputType.number,
+              //       onChanged: (value) {
+              //         if (value.isNotEmpty) {
+              //           store.setNumeroIteracoes(int.parse(value));
+              //         }
+              //       },
+              //       decoration: const InputDecoration(
+              //         hintText: "Número de Iterações",
+              //       ),
+              //     ),
+              //   ),
+              // ),
               ElevatedButton(
                   onPressed: () async {
                     await store.setCalculos();
@@ -220,7 +220,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
-                                "Iteração ${index + 1} para P = ${store.potenciaAtivaList[index]}: " +
+                                "Iteração ${index + 1} para P = ${store.potenciaIteracao[index]}: " +
                                     store.resultadoY1[index].toString() +
                                     " ; " +
                                     store.resultadoY2[index].toString()),
@@ -234,9 +234,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 child: ElevatedButton(
                     onPressed: () async {
                       Modular.to.pushNamed("/grafico/",
-                          arguments: ScreenArguments(
-                            store.data,
-                          ));
+                          arguments: ScreenArguments(store.data1, store.data2));
                     },
                     child: const Text("Plotar Gráfico")),
               ),
