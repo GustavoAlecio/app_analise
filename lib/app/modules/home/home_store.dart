@@ -62,7 +62,7 @@ abstract class HomeStoreBase with Store {
   int numeroIteracoes = 0;
 
   @observable
-  double variavel = 0.01;
+  double variavel = 0.0;
 
   @observable
   List<String> iteracoes = [];
@@ -71,7 +71,7 @@ abstract class HomeStoreBase with Store {
   List<String> potenciaIteracao = [];
 
   @action
-  setNumeroIteracoes(int value) => numeroIteracoes = value;
+  setNumeroIteracoes(double value) => variavel = value;
 
   @observable
   double baskharaB = 0.0;
@@ -115,14 +115,11 @@ abstract class HomeStoreBase with Store {
       List resultado = [];
       iteracoes.clear();
       potenciaInstantanea = 0;
-
-      for (int i = 0; i < numeroIteracoes; i++) {
-        potenciaInstantanea == 0
-            ? potenciaInstantanea = potenciaInicial
-            : potenciaInstantanea += variavel;
-        resultado.add((potenciaInstantanea * fatorPotencia).toPrecision(4));
-        iteracoes.add((i + 1).toString());
-        potenciaIteracao.add((potenciaInstantanea.toPrecision(2)).toString());
+      while (potenciaInstantanea <= potenciaFinal) {
+        double calculo = (potenciaInstantanea).toPrecision(4);
+        resultado.add(calculo);
+        potenciaIteracao.add(potenciaInstantanea.toPrecision(2).toString());
+        potenciaInstantanea += variavel;
       }
       return resultado;
     }
@@ -135,28 +132,32 @@ abstract class HomeStoreBase with Store {
         potenciaFinal != 0.0) {
       List resultado = [];
       potenciaInstantanea = 0.0;
-      for (int i = 1; i <= numeroIteracoes; i++) {
-        potenciaInstantanea == 0
-            ? potenciaInstantanea = potenciaInicial
-            : potenciaInstantanea += variavel;
-        resultado.add(
-            (potenciaInstantanea * sin(acos(fatorPotencia))).toPrecision(4));
+      while (potenciaInstantanea <= potenciaFinal) {
+        double calculo =
+            ((potenciaInstantanea / fatorPotencia) * sin(acos(fatorPotencia)))
+                .toPrecision(4);
+        resultado.add(calculo);
+        potenciaInstantanea += variavel;
       }
+
       return resultado;
     }
   }
 
   @action
   setB(int i) {
-    double x1 = ((resistencia * potenciaAtivaList[i]) +
-        (reatancia * potenciaReativaList[i]));
-    baskharaB = (2 * x1) - pow(tensaoEntrada, 2);
-    baskharaB = baskharaB.toPrecision(4);
+    // double x1 = ((resistencia * potenciaAtivaList[i]) +
+    //     (reatancia * potenciaReativaList[i]));
+    // baskharaB = (2 * x1) - (tensaoEntrada * tensaoEntrada);
+    double x1 = resistencia * potenciaAtivaList[i];
+    double x2 = reatancia * potenciaReativaList[i];
+    double x3 = tensaoEntrada * tensaoEntrada;
+    baskharaB = (2 * (x1 + x2) - (x3)).toPrecision(4);
   }
 
   @action
   setC(int i) {
-    num x1 = ((resistencia * potenciaReativaList[i]) -
+    double x1 = ((resistencia * potenciaReativaList[i]) -
         (reatancia * potenciaAtivaList[i]));
     double x2 = ((resistencia * potenciaAtivaList[i]) +
         (reatancia * potenciaReativaList[i]));
@@ -173,22 +174,47 @@ abstract class HomeStoreBase with Store {
     potenciaReativaList.clear();
     potenciaAtivaList = await setPotenciaAtiva();
     potenciaReativaList = await setPotenciaReativa();
-    for (var i = 0; i < numeroIteracoes; i++) {
+    // for (var i = 0; i < numeroIteracoes; i++) {
+    //   setB(i);
+    //   setC(i);
+    //   double delta = ((baskharaB * baskharaB) - (4 * baskharaC)).toPrecision(4);
+    //   double y1 = ((-baskharaB + sqrt(delta)) / 2).toPrecision(4);
+    //   double y2 = ((-baskharaB - sqrt(delta)) / 2).toPrecision(4);
+
+    //   double resulty1 = sqrt(y1).toPrecision(4);
+    //   double resulty2 = sqrt(y2).toPrecision(4);
+    //   // var result2 = [-sqrt(y1), sqrt(y2)];
+    //   // var result3 = [sqrt(y1), -sqrt(y2)];
+    //   // var result4 = [-sqrt(y1), -sqrt(y2)];
+
+    //   setResultadoY1(resulty1);
+    //   setResultadoY2(resulty2);
+    // }
+
+    potenciaInstantanea = 0.0;
+    int i = 0;
+    do {
       setB(i);
       setC(i);
       double delta = ((baskharaB * baskharaB) - (4 * baskharaC)).toPrecision(4);
+
       double y1 = ((-baskharaB + sqrt(delta)) / 2).toPrecision(4);
+
       double y2 = ((-baskharaB - sqrt(delta)) / 2).toPrecision(4);
 
       double resulty1 = sqrt(y1).toPrecision(4);
-      double resulty2 = sqrt(y2).toPrecision(4);
-      // var result2 = [-sqrt(y1), sqrt(y2)];
-      // var result3 = [sqrt(y1), -sqrt(y2)];
-      // var result4 = [-sqrt(y1), -sqrt(y2)];
 
+      double resulty2 = sqrt(y2).toPrecision(4);
+      if (resulty1.isNaN) {
+        break;
+      }
       setResultadoY1(resulty1);
+
       setResultadoY2(resulty2);
-    }
+      i++;
+      potenciaInstantanea += variavel;
+    } while (potenciaInstantanea <= potenciaFinal);
+
     setCurvaPV();
   }
 
@@ -196,16 +222,12 @@ abstract class HomeStoreBase with Store {
   setCurvaPV() {
     data1.clear();
     data2.clear();
-    potenciaInstantanea = 0.0;
+    int iterador = 0;
 
-    for (var i = 0; i < numeroIteracoes; i++) {
-      if (potenciaInstantanea == 0) {
-        potenciaInstantanea = potenciaInicial;
-      } else {
-        potenciaInstantanea += variavel;
-      }
-      data1.add(CurvaPV(potenciaInstantanea, resultadoY1[i]));
-      data2.add(CurvaPV(potenciaInstantanea, resultadoY2[i]));
+    for (double i = 0.0; i < potenciaInstantanea; i += variavel) {
+      data1.add(CurvaPV(i, resultadoY1[iterador]));
+      data2.add(CurvaPV(i, resultadoY2[iterador]));
+      iterador++;
     }
   }
 }

@@ -32,7 +32,8 @@ class GraficoPageState extends State<GraficoPage> {
             domainFn: (CurvaPV series, _) => series.lineX,
             measureFn: (CurvaPV series, _) => series.result,
             colorFn: (CurvaPV series, _) =>
-                charts.MaterialPalette.red.shadeDefault)
+                charts.MaterialPalette.red.shadeDefault,
+            displayName: "Curva PV")
       ];
       return series;
     }
@@ -46,7 +47,10 @@ class GraficoPageState extends State<GraficoPage> {
         height: 550,
         width: 400,
         child: Card(
-          child: charts.LineChart(getSeriesdata()),
+          child: charts.LineChart(
+            getSeriesdata(),
+            animate: true,
+          ),
         ),
       )),
     );

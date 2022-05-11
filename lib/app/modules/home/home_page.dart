@@ -148,24 +148,24 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 10),
-                    child: SizedBox(
-                      width: 150,
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          if (value.isNotEmpty) {
-                            store.setPotenciaInicial(double.parse(value));
-                          }
-                        },
-                        decoration: const InputDecoration(
-                          hintText: "Potência Inicial",
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(
+                  //       vertical: 10.0, horizontal: 10),
+                  //   child: SizedBox(
+                  //     width: 150,
+                  //     child: TextFormField(
+                  //       keyboardType: TextInputType.number,
+                  //       onChanged: (value) {
+                  //         if (value.isNotEmpty) {
+                  //           store.setPotenciaInicial(double.parse(value));
+                  //         }
+                  //       },
+                  //       decoration: const InputDecoration(
+                  //         hintText: "Potência Inicial",
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10),
@@ -179,31 +179,31 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                           }
                         },
                         decoration: const InputDecoration(
-                          hintText: "Potência Final",
+                          hintText: "Potência Ativa Final",
                         ),
                       ),
                     ),
                   ),
                 ],
               ),
-              // Padding(
-              //   padding:
-              //       const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-              //   child: SizedBox(
-              //     width: 200,
-              //     child: TextFormField(
-              //       keyboardType: TextInputType.number,
-              //       onChanged: (value) {
-              //         if (value.isNotEmpty) {
-              //           store.setNumeroIteracoes(int.parse(value));
-              //         }
-              //       },
-              //       decoration: const InputDecoration(
-              //         hintText: "Número de Iterações",
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                child: SizedBox(
+                  width: 200,
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        store.setNumeroIteracoes(double.parse(value));
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      hintText: "Tamanho do passo",
+                    ),
+                  ),
+                ),
+              ),
               ElevatedButton(
                   onPressed: () async {
                     await store.setCalculos();

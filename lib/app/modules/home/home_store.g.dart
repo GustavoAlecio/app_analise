@@ -121,6 +121,22 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  late final _$potenciaInstantaneaAtom =
+      Atom(name: 'HomeStoreBase.potenciaInstantanea', context: context);
+
+  @override
+  double get potenciaInstantanea {
+    _$potenciaInstantaneaAtom.reportRead();
+    return super.potenciaInstantanea;
+  }
+
+  @override
+  set potenciaInstantanea(double value) {
+    _$potenciaInstantaneaAtom.reportWrite(value, super.potenciaInstantanea, () {
+      super.potenciaInstantanea = value;
+    });
+  }
+
   late final _$potenciaAtivaListAtom =
       Atom(name: 'HomeStoreBase.potenciaAtivaList', context: context);
 
@@ -134,6 +150,22 @@ mixin _$HomeStore on HomeStoreBase, Store {
   set potenciaAtivaList(List<dynamic> value) {
     _$potenciaAtivaListAtom.reportWrite(value, super.potenciaAtivaList, () {
       super.potenciaAtivaList = value;
+    });
+  }
+
+  late final _$potenciaReativaListAtom =
+      Atom(name: 'HomeStoreBase.potenciaReativaList', context: context);
+
+  @override
+  List<dynamic> get potenciaReativaList {
+    _$potenciaReativaListAtom.reportRead();
+    return super.potenciaReativaList;
+  }
+
+  @override
+  set potenciaReativaList(List<dynamic> value) {
+    _$potenciaReativaListAtom.reportWrite(value, super.potenciaReativaList, () {
+      super.potenciaReativaList = value;
     });
   }
 
@@ -153,6 +185,22 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  late final _$variavelAtom =
+      Atom(name: 'HomeStoreBase.variavel', context: context);
+
+  @override
+  double get variavel {
+    _$variavelAtom.reportRead();
+    return super.variavel;
+  }
+
+  @override
+  set variavel(double value) {
+    _$variavelAtom.reportWrite(value, super.variavel, () {
+      super.variavel = value;
+    });
+  }
+
   late final _$iteracoesAtom =
       Atom(name: 'HomeStoreBase.iteracoes', context: context);
 
@@ -166,6 +214,22 @@ mixin _$HomeStore on HomeStoreBase, Store {
   set iteracoes(List<String> value) {
     _$iteracoesAtom.reportWrite(value, super.iteracoes, () {
       super.iteracoes = value;
+    });
+  }
+
+  late final _$potenciaIteracaoAtom =
+      Atom(name: 'HomeStoreBase.potenciaIteracao', context: context);
+
+  @override
+  List<String> get potenciaIteracao {
+    _$potenciaIteracaoAtom.reportRead();
+    return super.potenciaIteracao;
+  }
+
+  @override
+  set potenciaIteracao(List<String> value) {
+    _$potenciaIteracaoAtom.reportWrite(value, super.potenciaIteracao, () {
+      super.potenciaIteracao = value;
     });
   }
 
@@ -230,6 +294,36 @@ mixin _$HomeStore on HomeStoreBase, Store {
   set resultadoY2(List<double> value) {
     _$resultadoY2Atom.reportWrite(value, super.resultadoY2, () {
       super.resultadoY2 = value;
+    });
+  }
+
+  late final _$data1Atom = Atom(name: 'HomeStoreBase.data1', context: context);
+
+  @override
+  List<CurvaPV> get data1 {
+    _$data1Atom.reportRead();
+    return super.data1;
+  }
+
+  @override
+  set data1(List<CurvaPV> value) {
+    _$data1Atom.reportWrite(value, super.data1, () {
+      super.data1 = value;
+    });
+  }
+
+  late final _$data2Atom = Atom(name: 'HomeStoreBase.data2', context: context);
+
+  @override
+  List<CurvaPV> get data2 {
+    _$data2Atom.reportRead();
+    return super.data2;
+  }
+
+  @override
+  set data2(List<CurvaPV> value) {
+    _$data2Atom.reportWrite(value, super.data2, () {
+      super.data2 = value;
     });
   }
 
@@ -354,7 +448,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  dynamic setNumeroIteracoes(int value) {
+  dynamic setNumeroIteracoes(double value) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.setNumeroIteracoes');
     try {
@@ -409,6 +503,39 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  dynamic setB(int i) {
+    final _$actionInfo =
+        _$HomeStoreBaseActionController.startAction(name: 'HomeStoreBase.setB');
+    try {
+      return super.setB(i);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setC(int i) {
+    final _$actionInfo =
+        _$HomeStoreBaseActionController.startAction(name: 'HomeStoreBase.setC');
+    try {
+      return super.setC(i);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setCurvaPV() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.setCurvaPV');
+    try {
+      return super.setCurvaPV();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 radioValue: ${radioValue},
@@ -418,13 +545,19 @@ resistencia: ${resistencia},
 reatancia: ${reatancia},
 potenciaInicial: ${potenciaInicial},
 potenciaFinal: ${potenciaFinal},
+potenciaInstantanea: ${potenciaInstantanea},
 potenciaAtivaList: ${potenciaAtivaList},
+potenciaReativaList: ${potenciaReativaList},
 numeroIteracoes: ${numeroIteracoes},
+variavel: ${variavel},
 iteracoes: ${iteracoes},
+potenciaIteracao: ${potenciaIteracao},
 baskharaB: ${baskharaB},
 baskharaC: ${baskharaC},
 resultadoY1: ${resultadoY1},
 resultadoY2: ${resultadoY2},
+data1: ${data1},
+data2: ${data2},
 potenciaAtiva: ${potenciaAtiva},
 potenciaReativa: ${potenciaReativa}
     ''';
