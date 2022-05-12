@@ -212,21 +212,24 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   child: const Text("Calcular")),
               Observer(builder: (_) {
                 return SizedBox(
-                  height: 155,
-                  child: ListView.builder(
-                      itemCount: store.resultadoY1.length,
-                      itemBuilder: ((context, index) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                                "Iteração ${index + 1} para P = ${store.potenciaIteracao[index]}: " +
-                                    store.resultadoY1[index].toString() +
-                                    " ; " +
-                                    store.resultadoY2[index].toString()),
-                          ],
-                        );
-                      })),
+                  height: 50,
+                  child: store.resultadoY1.length > 1
+                      ? Text("Calculo completo, plotar gráfico!")
+                      : SizedBox(),
+                  // ListView.builder(
+                  //     itemCount: store.resultadoY1.length,
+                  //     itemBuilder: ((context, index) {
+                  //       return Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //         children: [
+                  //           Text(
+                  //               "Iteração ${index + 1} para P = ${store.potenciaIteracao[index]}: " +
+                  //                   store.resultadoY1[index].toString() +
+                  //                   " ; " +
+                  //                   store.resultadoY2[index].toString()),
+                  //         ],
+                  //       );
+                  //     })),
                 );
               }),
               Padding(
