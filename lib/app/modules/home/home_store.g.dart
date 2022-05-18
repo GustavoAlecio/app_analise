@@ -297,6 +297,22 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  late final _$pontoCriticoAtom =
+      Atom(name: 'HomeStoreBase.pontoCritico', context: context);
+
+  @override
+  List<dynamic> get pontoCritico {
+    _$pontoCriticoAtom.reportRead();
+    return super.pontoCritico;
+  }
+
+  @override
+  set pontoCritico(List<dynamic> value) {
+    _$pontoCriticoAtom.reportWrite(value, super.pontoCritico, () {
+      super.pontoCritico = value;
+    });
+  }
+
   late final _$data1Atom = Atom(name: 'HomeStoreBase.data1', context: context);
 
   @override
@@ -556,6 +572,7 @@ baskharaB: ${baskharaB},
 baskharaC: ${baskharaC},
 resultadoY1: ${resultadoY1},
 resultadoY2: ${resultadoY2},
+pontoCritico: ${pontoCritico},
 data1: ${data1},
 data2: ${data2},
 potenciaAtiva: ${potenciaAtiva},

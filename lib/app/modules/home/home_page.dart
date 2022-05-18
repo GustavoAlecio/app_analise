@@ -32,37 +32,37 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
                 child: Text("Qual tensão deseja obter?"),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
-                    children: [
-                      Observer(builder: (context) {
-                        return Radio<int>(
-                          groupValue: store.radioValue,
-                          onChanged: (newValue) =>
-                              store.setRadioValue(newValue!),
-                          value: 0,
-                        );
-                      }),
-                      const Text("V1")
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Observer(builder: (_) {
-                        return Radio<int>(
-                          groupValue: store.radioValue,
-                          onChanged: (newValue) =>
-                              store.setRadioValue(newValue!),
-                          value: 1,
-                        );
-                      }),
-                      const Text("V2")
-                    ],
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     Row(
+              //       children: [
+              //         Observer(builder: (context) {
+              //           return Radio<int>(
+              //             groupValue: store.radioValue,
+              //             onChanged: (newValue) =>
+              //                 store.setRadioValue(newValue!),
+              //             value: 0,
+              //           );
+              //         }),
+              //         const Text("V1")
+              //       ],
+              //     ),
+              //     Row(
+              //       children: [
+              //         Observer(builder: (_) {
+              //           return Radio<int>(
+              //             groupValue: store.radioValue,
+              //             onChanged: (newValue) =>
+              //                 store.setRadioValue(newValue!),
+              //             value: 1,
+              //           );
+              //         }),
+              //         const Text("V2")
+              //       ],
+              //     ),
+              //   ],
+              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -214,7 +214,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 return SizedBox(
                   height: 50,
                   child: store.resultadoY1.length > 1
-                      ? Text("Calculo completo, plotar gráfico!")
+                      ? Text(
+                          "Calculo completo, plotar gráfico! \n Ponto Critico: V2 =  ${store.pontoCritico[0]} e P2 = ${store.pontoCritico[1]}")
                       : SizedBox(),
                   // ListView.builder(
                   //     itemCount: store.resultadoY1.length,

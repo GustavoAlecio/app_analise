@@ -86,6 +86,9 @@ abstract class HomeStoreBase with Store {
   List<double> resultadoY2 = [];
 
   @observable
+  List pontoCritico = [0, 0];
+
+  @observable
   List<CurvaPV> data1 = [];
 
   @observable
@@ -198,21 +201,26 @@ abstract class HomeStoreBase with Store {
       setC(i);
       double delta = ((baskharaB * baskharaB) - (4 * baskharaC)).toPrecision(4);
 
-      double y1 = ((-baskharaB + sqrt(delta)) / 2).toPrecision(4);
+      if (delta > 0) {
+        double y1 = ((-baskharaB + sqrt(delta)) / 2).toPrecision(4);
 
-      double y2 = ((-baskharaB - sqrt(delta)) / 2).toPrecision(4);
+        double y2 = ((-baskharaB - sqrt(delta)) / 2).toPrecision(4);
 
-      double resulty1 = sqrt(y1).toPrecision(4);
+        double resulty1 = sqrt(y1).toPrecision(4);
 
-      double resulty2 = sqrt(y2).toPrecision(4);
-      if (resulty1.isNaN) {
+        double resulty2 = sqrt(y2).toPrecision(4);
+        if (resulty1.isNaN) {
+          break;
+        }
+        setResultadoY1(resulty1);
+        setResultadoY2(resulty2);
+        pontoCritico[0] = resultadoY1[i].toPrecision(4);
+        pontoCritico[1] = potenciaInstantanea.toPrecision(3);
+        i++;
+        potenciaInstantanea += variavel;
+      } else {
         break;
       }
-      setResultadoY1(resulty1);
-
-      setResultadoY2(resulty2);
-      i++;
-      potenciaInstantanea += variavel;
     } while (potenciaInstantanea <= potenciaFinal);
 
     setCurvaPV();
