@@ -200,20 +200,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                       ? Text(
                           "Calculo completo, plotar gráfico! \n Ponto Critico: V2 =  ${store.pontoCritico[0]} e P2 = ${store.pontoCritico[1]}")
                       : const SizedBox(),
-                  // ListView.builder(
-                  //     itemCount: store.resultadoY1.length,
-                  //     itemBuilder: ((context, index) {
-                  //       return Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //         children: [
-                  //           Text(
-                  //               "Iteração ${index + 1} para P = ${store.potenciaIteracao[index]}: " +
-                  //                   store.resultadoY1[index].toString() +
-                  //                   " ; " +
-                  //                   store.resultadoY2[index].toString()),
-                  //         ],
-                  //       );
-                  //     })),
                 );
               }),
               Padding(
