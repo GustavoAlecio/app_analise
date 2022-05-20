@@ -62,16 +62,13 @@ abstract class HomeStoreBase with Store {
   int numeroIteracoes = 0;
 
   @observable
-  double variavel = 0.0;
+  double variavel = 0.0001;
 
   @observable
   List<String> iteracoes = [];
 
   @observable
   List<String> potenciaIteracao = [];
-
-  @action
-  setNumeroIteracoes(double value) => variavel = value;
 
   @observable
   double baskharaB = 0.0;
@@ -172,27 +169,10 @@ abstract class HomeStoreBase with Store {
   setCalculos() async {
     resultadoY1.clear();
     resultadoY2.clear();
-    numeroIteracoes = (potenciaFinal - potenciaInicial) ~/ variavel;
     potenciaAtivaList.clear();
     potenciaReativaList.clear();
     potenciaAtivaList = await setPotenciaAtiva();
     potenciaReativaList = await setPotenciaReativa();
-    // for (var i = 0; i < numeroIteracoes; i++) {
-    //   setB(i);
-    //   setC(i);
-    //   double delta = ((baskharaB * baskharaB) - (4 * baskharaC)).toPrecision(4);
-    //   double y1 = ((-baskharaB + sqrt(delta)) / 2).toPrecision(4);
-    //   double y2 = ((-baskharaB - sqrt(delta)) / 2).toPrecision(4);
-
-    //   double resulty1 = sqrt(y1).toPrecision(4);
-    //   double resulty2 = sqrt(y2).toPrecision(4);
-    //   // var result2 = [-sqrt(y1), sqrt(y2)];
-    //   // var result3 = [sqrt(y1), -sqrt(y2)];
-    //   // var result4 = [-sqrt(y1), -sqrt(y2)];
-
-    //   setResultadoY1(resulty1);
-    //   setResultadoY2(resulty2);
-    // }
 
     potenciaInstantanea = 0.0;
     int i = 0;

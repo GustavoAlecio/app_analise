@@ -186,24 +186,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   ),
                 ],
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                child: SizedBox(
-                  width: 200,
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        store.setNumeroIteracoes(double.parse(value));
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      hintText: "Tamanho do passo",
-                    ),
-                  ),
-                ),
-              ),
+
               ElevatedButton(
                   onPressed: () async {
                     await store.setCalculos();
@@ -216,7 +199,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   child: store.resultadoY1.length > 1
                       ? Text(
                           "Calculo completo, plotar gráfico! \n Ponto Critico: V2 =  ${store.pontoCritico[0]} e P2 = ${store.pontoCritico[1]}")
-                      : SizedBox(),
+                      : const SizedBox(),
                   // ListView.builder(
                   //     itemCount: store.resultadoY1.length,
                   //     itemBuilder: ((context, index) {
