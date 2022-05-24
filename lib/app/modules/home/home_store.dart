@@ -62,7 +62,7 @@ abstract class HomeStoreBase with Store {
   int numeroIteracoes = 0;
 
   @observable
-  double variavel = 0.0001;
+  double variavel = 0.00005;
 
   @observable
   List<String> iteracoes = [];
@@ -106,6 +106,9 @@ abstract class HomeStoreBase with Store {
 
   @observable
   double potenciaReativa = 0.0;
+
+  @observable
+  bool loading = false;
 
   @action
   setPotenciaAtiva() {
@@ -202,8 +205,9 @@ abstract class HomeStoreBase with Store {
         break;
       }
     } while (potenciaInstantanea <= potenciaFinal);
-
-    setCurvaPV();
+    loading = true;
+    await setCurvaPV();
+    loading = false;
   }
 
   @action

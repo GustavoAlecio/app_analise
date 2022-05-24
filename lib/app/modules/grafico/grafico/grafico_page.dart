@@ -3,7 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:app_analise/app//modules/grafico/grafico/grafico_store.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart';
 
 class GraficoPage extends StatefulWidget {
   final String title;
@@ -21,11 +20,11 @@ class GraficoPageState extends State<GraficoPage> {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Graficos"),
+        title: const Text("Grafico Curva PV"),
       ),
       body: SingleChildScrollView(
           child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.85,
+        height: MediaQuery.of(context).size.height * 0.7,
         width: 400,
         child: Card(
             child: SfCartesianChart(
@@ -33,6 +32,8 @@ class GraficoPageState extends State<GraficoPage> {
           tooltipBehavior: tooltipBehavior,
           series: <ChartSeries>[
             LineSeries<CurvaPV, double>(
+              animationDelay: 2000,
+              animationDuration: 5000,
               name: "Operação Estável",
               dataSource: args.resultadoSuperior,
               xValueMapper: (CurvaPV serie, _) => serie.lineX,
@@ -42,6 +43,8 @@ class GraficoPageState extends State<GraficoPage> {
               enableTooltip: true,
             ),
             LineSeries<CurvaPV, double>(
+              animationDelay: 2000,
+              animationDuration: 5000,
               name: "Operação Instável",
               dataSource: args.resultadoInferior,
               xValueMapper: (CurvaPV serie, _) => serie.lineX,
@@ -61,13 +64,7 @@ class GraficoPageState extends State<GraficoPage> {
               title: AxisTitle(text: "V\u2082 [pu]"),
               edgeLabelPlacement: EdgeLabelPlacement.shift,
               maximumLabels: 3),
-        )
-
-            // charts.LineChart(
-            //   getSeriesdata(),
-            //   animate: true,
-            // ),
-            ),
+        )),
       )),
     );
   }

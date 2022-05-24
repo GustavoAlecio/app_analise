@@ -10,6 +10,6 @@ class GraficoModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => GraficoPage()),
+    ChildRoute('/', child: (_, args) => const GraficoPage()),
   ];
 }
