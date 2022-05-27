@@ -38,8 +38,8 @@ dependencies:
   mobx: ^2.0.6+1
   flutter_mobx: ^2.0.4
   build_runner: ^2.1.7
-  charts_flutter: ^0.12.0
-  syncfusion_flutter_charts: ^20.1.56
+  syncfusion_flutter_charts: 20.1.55
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
