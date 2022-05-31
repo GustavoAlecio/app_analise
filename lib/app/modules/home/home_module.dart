@@ -1,4 +1,4 @@
-import 'package:app_analise/app/modules/grafico/grafico/grafico_module.dart';
+import 'package:app_analise/app/modules/grafico/grafico_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../home/home_store.dart';
 

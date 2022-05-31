@@ -1,5 +1,5 @@
-import 'package:app_analise/app//modules/grafico/grafico/grafico_Page.dart';
-import 'package:app_analise/app//modules/grafico/grafico/grafico_store.dart';
+import 'package:app_analise/app/modules/grafico/grafico_page.dart';
+import 'package:app_analise/app/modules/grafico/grafico_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class GraficoModule extends Module {

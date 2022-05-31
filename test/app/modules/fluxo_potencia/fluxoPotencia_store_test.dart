@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app_analise/app//modules/grafico/grafico/grafico_store.dart';
- 
+import 'package:app_analise/app/modules/fluxo_potencia/fluxo_potencia_store.dart';
+
 void main() {
-  late GraficoStore store;
+  late FluxoPotenciaStore store;
 
   setUpAll(() {
-    store = GraficoStore();
+    store = FluxoPotenciaStore();
   });
 
   test('increment count', () async {
