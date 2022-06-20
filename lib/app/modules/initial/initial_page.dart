@@ -18,7 +18,7 @@ class InitialPageState extends State<InitialPage> {
     super.initState();
     SystemChrome.setEnabledSystemUIMode;
     Future.delayed(const Duration(seconds: 4)).then((_) {
-      Modular.to.pushReplacementNamed("/home/");
+      Modular.to.pushReplacementNamed("/fluxocarga");
     });
   }
 

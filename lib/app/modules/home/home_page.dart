@@ -230,7 +230,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         onPressed: () async {
-                          Modular.to.pushNamed("/grafico/",
+                          Modular.to.pushNamed("/curvaPV/grafico/",
                               arguments:
                                   ScreenArguments(store.data1, store.data2));
                         },
