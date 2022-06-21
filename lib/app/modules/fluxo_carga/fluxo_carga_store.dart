@@ -57,7 +57,7 @@ abstract class _FluxoCargaStoreBase with Store {
   setShant(String value) => shant.text = value;
 
   @observable
-  double tolerancia = 0.0;
+  double tolerancia = 0.003;
 
   @observable
   int radio1 = 0;
@@ -95,7 +95,9 @@ abstract class _FluxoCargaStoreBase with Store {
   }
 
   @observable
-  List<Admitancia> admitancia = [];
+  List<Resultados> resultadosList = [];
+  @action
+  setResultados(Resultados resultados) => resultadosList.add(resultados);
   @observable
   double potenciaEspecificada = 0.0;
   @observable
@@ -118,6 +120,10 @@ abstract class _FluxoCargaStoreBase with Store {
   MatrizAdmitancia2x2? matrizB;
   @observable
   int iteracao = 0;
+  @observable
+  Barra barraInicio = Barra();
+  @observable
+  Barra barraFim = Barra();
 
   @action
   calculo() {
@@ -144,8 +150,6 @@ abstract class _FluxoCargaStoreBase with Store {
       }
       for (var i = 0; i < listLinhas.length; i++) {
         Linha lista = listLinhas[i];
-        Barra barraInicio;
-        Barra barraFim;
 
         Admitancia admitanciaItem =
             setAdmitancia(lista.conexao!, lista.r!, lista.x!);
@@ -161,26 +165,42 @@ abstract class _FluxoCargaStoreBase with Store {
           g: matrizG!,
           b: matrizB!,
           theta1: barraInicio.angulo!,
-          tensao2: barraFim.tensao!,
-          theta2: barraFim.angulo!,
+          tensao2: tensao2,
+          theta2: angulo2,
         );
         resultQ2 = setQ2(
           tensao1: barraInicio.tensao!,
           g: matrizG!,
           b: matrizB!,
           theta1: barraInicio.angulo!,
-          tensao2: barraFim.tensao!,
-          theta2: barraFim.angulo!,
+          tensao2: tensao2,
+          theta2: angulo2,
         );
         potenciaEspecificada =
             setPotenciaEspecificada(barraFim.potenciaConsumida!);
         potenciaReativaEspecificada =
-            setPotenciaReativaEspecificada(barraFim.pReativaEspecificada!);
+            setPotenciaReativaEspecificada(barraFim.reatanciaGerada!);
         deltaP2 = potenciaEspecificada - resultP2;
         deltaQ2 = potenciaReativaEspecificada - resultQ2;
+        setResultados(Resultados(
+          iteracao: iteracao,
+          admitancia: admitanciaItem,
+          matrizG: matrizG,
+          matrizB: matrizB,
+          barraInicio: barraInicio,
+          barraFim: barraFim,
+          resultP2: resultP2.toPrecision(4),
+          resultQ2: resultQ2.toPrecision(4),
+          potenciaAtivaEspecificada: potenciaEspecificada.toPrecision(4),
+          potenciaReativaEspecificada:
+              potenciaReativaEspecificada.toPrecision(4),
+          deltaP2: deltaP2.toPrecision(4),
+          deltaQ2: deltaQ2.toPrecision(4),
+        ));
       }
       iteracao++;
-    } while (deltaP2 > tolerancia && deltaQ2 > tolerancia);
+    } while (deltaP2.abs() > tolerancia && deltaQ2.abs() > tolerancia);
+    resultadosList = List.from(resultadosList);
   }
 
   @action
@@ -218,10 +238,10 @@ abstract class _FluxoCargaStoreBase with Store {
   @action
   setMatrizG(double resistencia) {
     MatrizAdmitancia2x2 result = MatrizAdmitancia2x2(
-      arg1: resistencia,
-      arg2: resistencia * (-1),
-      arg3: resistencia * (-1),
-      arg4: resistencia,
+      arg1: resistencia.toPrecision(4),
+      arg2: resistencia.toPrecision(4) * (-1),
+      arg3: resistencia.toPrecision(4) * (-1),
+      arg4: resistencia.toPrecision(4),
     );
     return result;
   }
@@ -229,10 +249,10 @@ abstract class _FluxoCargaStoreBase with Store {
   @action
   setMatrizB(double reatancia, double shant) {
     MatrizAdmitancia2x2 result = MatrizAdmitancia2x2(
-        arg1: reatancia + shant,
-        arg2: reatancia * (-1),
-        arg3: reatancia * (-1),
-        arg4: reatancia + shant);
+        arg1: reatancia.toPrecision(4) + shant.toPrecision(4),
+        arg2: reatancia.toPrecision(4) * (-1),
+        arg3: reatancia.toPrecision(4) * (-1),
+        arg4: reatancia.toPrecision(4) + shant);
     return result;
   }
 
@@ -311,7 +331,7 @@ abstract class _FluxoCargaStoreBase with Store {
   }) {
     double result = -((tensao2 * tensao2) * b.arg4!) +
         (tensao2 * tensao1) *
-            (g.arg3! * sin(theta2 - theta1) - b.arg3! * sin(theta2 - theta1));
+            (g.arg3! * sin(theta2 - theta1) - b.arg3! * cos(theta2 - theta1));
     return result.toPrecision(4);
   }
 

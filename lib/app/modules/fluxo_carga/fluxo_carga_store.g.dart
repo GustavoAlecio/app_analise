@@ -231,19 +231,19 @@ mixin _$FluxoCargaStore on _FluxoCargaStoreBase, Store {
     });
   }
 
-  late final _$admitanciaAtom =
-      Atom(name: '_FluxoCargaStoreBase.admitancia', context: context);
+  late final _$resultadosListAtom =
+      Atom(name: '_FluxoCargaStoreBase.resultadosList', context: context);
 
   @override
-  List<Admitancia> get admitancia {
-    _$admitanciaAtom.reportRead();
-    return super.admitancia;
+  List<Resultados> get resultadosList {
+    _$resultadosListAtom.reportRead();
+    return super.resultadosList;
   }
 
   @override
-  set admitancia(List<Admitancia> value) {
-    _$admitanciaAtom.reportWrite(value, super.admitancia, () {
-      super.admitancia = value;
+  set resultadosList(List<Resultados> value) {
+    _$resultadosListAtom.reportWrite(value, super.resultadosList, () {
+      super.resultadosList = value;
     });
   }
 
@@ -378,6 +378,38 @@ mixin _$FluxoCargaStore on _FluxoCargaStoreBase, Store {
     });
   }
 
+  late final _$matrizGAtom =
+      Atom(name: '_FluxoCargaStoreBase.matrizG', context: context);
+
+  @override
+  MatrizAdmitancia2x2? get matrizG {
+    _$matrizGAtom.reportRead();
+    return super.matrizG;
+  }
+
+  @override
+  set matrizG(MatrizAdmitancia2x2? value) {
+    _$matrizGAtom.reportWrite(value, super.matrizG, () {
+      super.matrizG = value;
+    });
+  }
+
+  late final _$matrizBAtom =
+      Atom(name: '_FluxoCargaStoreBase.matrizB', context: context);
+
+  @override
+  MatrizAdmitancia2x2? get matrizB {
+    _$matrizBAtom.reportRead();
+    return super.matrizB;
+  }
+
+  @override
+  set matrizB(MatrizAdmitancia2x2? value) {
+    _$matrizBAtom.reportWrite(value, super.matrizB, () {
+      super.matrizB = value;
+    });
+  }
+
   late final _$iteracaoAtom =
       Atom(name: '_FluxoCargaStoreBase.iteracao', context: context);
 
@@ -391,6 +423,38 @@ mixin _$FluxoCargaStore on _FluxoCargaStoreBase, Store {
   set iteracao(int value) {
     _$iteracaoAtom.reportWrite(value, super.iteracao, () {
       super.iteracao = value;
+    });
+  }
+
+  late final _$barraInicioAtom =
+      Atom(name: '_FluxoCargaStoreBase.barraInicio', context: context);
+
+  @override
+  Barra get barraInicio {
+    _$barraInicioAtom.reportRead();
+    return super.barraInicio;
+  }
+
+  @override
+  set barraInicio(Barra value) {
+    _$barraInicioAtom.reportWrite(value, super.barraInicio, () {
+      super.barraInicio = value;
+    });
+  }
+
+  late final _$barraFimAtom =
+      Atom(name: '_FluxoCargaStoreBase.barraFim', context: context);
+
+  @override
+  Barra get barraFim {
+    _$barraFimAtom.reportRead();
+    return super.barraFim;
+  }
+
+  @override
+  set barraFim(Barra value) {
+    _$barraFimAtom.reportWrite(value, super.barraFim, () {
+      super.barraFim = value;
     });
   }
 
@@ -552,6 +616,17 @@ mixin _$FluxoCargaStore on _FluxoCargaStoreBase, Store {
   }
 
   @override
+  dynamic setResultados(Resultados resultados) {
+    final _$actionInfo = _$_FluxoCargaStoreBaseActionController.startAction(
+        name: '_FluxoCargaStoreBase.setResultados');
+    try {
+      return super.setResultados(resultados);
+    } finally {
+      _$_FluxoCargaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic calculo() {
     final _$actionInfo = _$_FluxoCargaStoreBaseActionController.startAction(
         name: '_FluxoCargaStoreBase.calculo');
@@ -597,7 +672,7 @@ mixin _$FluxoCargaStore on _FluxoCargaStoreBase, Store {
   }
 
   @override
-  MatrizAdmitancia2x2 setMatrizG(double resistencia) {
+  dynamic setMatrizG(double resistencia) {
     final _$actionInfo = _$_FluxoCargaStoreBaseActionController.startAction(
         name: '_FluxoCargaStoreBase.setMatrizG');
     try {
@@ -613,6 +688,61 @@ mixin _$FluxoCargaStore on _FluxoCargaStoreBase, Store {
         name: '_FluxoCargaStoreBase.setMatrizB');
     try {
       return super.setMatrizB(reatancia, shant);
+    } finally {
+      _$_FluxoCargaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setInverseMatrix(MatrizAdmitancia2x2 matrix) {
+    final _$actionInfo = _$_FluxoCargaStoreBaseActionController.startAction(
+        name: '_FluxoCargaStoreBase.setInverseMatrix');
+    try {
+      return super.setInverseMatrix(matrix);
+    } finally {
+      _$_FluxoCargaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setHkk(double q, double v, double b) {
+    final _$actionInfo = _$_FluxoCargaStoreBaseActionController.startAction(
+        name: '_FluxoCargaStoreBase.setHkk');
+    try {
+      return super.setHkk(q, v, b);
+    } finally {
+      _$_FluxoCargaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setNkk(double p, double v, double g) {
+    final _$actionInfo = _$_FluxoCargaStoreBaseActionController.startAction(
+        name: '_FluxoCargaStoreBase.setNkk');
+    try {
+      return super.setNkk(p, v, g);
+    } finally {
+      _$_FluxoCargaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setMkk(double p, double v, double g) {
+    final _$actionInfo = _$_FluxoCargaStoreBaseActionController.startAction(
+        name: '_FluxoCargaStoreBase.setMkk');
+    try {
+      return super.setMkk(p, v, g);
+    } finally {
+      _$_FluxoCargaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setLkk(double q, double v, double b) {
+    final _$actionInfo = _$_FluxoCargaStoreBaseActionController.startAction(
+        name: '_FluxoCargaStoreBase.setLkk');
+    try {
+      return super.setLkk(q, v, b);
     } finally {
       _$_FluxoCargaStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -714,7 +844,7 @@ radio1: ${radio1},
 radio2: ${radio2},
 listBarras: ${listBarras},
 listLinhas: ${listLinhas},
-admitancia: ${admitancia},
+resultadosList: ${resultadosList},
 potenciaEspecificada: ${potenciaEspecificada},
 potenciaReativaEspecificada: ${potenciaReativaEspecificada},
 resultP2: ${resultP2},
@@ -723,7 +853,11 @@ tensao2: ${tensao2},
 angulo2: ${angulo2},
 deltaP2: ${deltaP2},
 deltaQ2: ${deltaQ2},
-iteracao: ${iteracao}
+matrizG: ${matrizG},
+matrizB: ${matrizB},
+iteracao: ${iteracao},
+barraInicio: ${barraInicio},
+barraFim: ${barraFim}
     ''';
   }
 }

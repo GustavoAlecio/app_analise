@@ -62,4 +62,39 @@ class MatrizAdmitancia2x2 {
     this.arg3,
     this.arg4,
   });
+
+  @override
+  String toString() {
+    return "[$arg1  $arg2 \n$arg3   $arg4]";
+  }
+}
+
+class Resultados {
+  int? iteracao;
+  Admitancia? admitancia;
+  MatrizAdmitancia2x2? matrizG;
+  MatrizAdmitancia2x2? matrizB;
+  Barra? barraInicio;
+  Barra? barraFim;
+  double? resultP2;
+  double? resultQ2;
+  double? potenciaAtivaEspecificada;
+  double? potenciaReativaEspecificada;
+  double? deltaP2;
+  double? deltaQ2;
+
+  Resultados({
+    this.iteracao,
+    this.admitancia,
+    this.matrizG,
+    this.matrizB,
+    this.barraInicio,
+    this.barraFim,
+    this.resultP2,
+    this.resultQ2,
+    this.potenciaAtivaEspecificada,
+    this.potenciaReativaEspecificada,
+    this.deltaP2,
+    this.deltaQ2,
+  });
 }
